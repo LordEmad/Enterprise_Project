@@ -7,3 +7,8 @@ CPU_U=(mpstat 1 1 | awk '/average/ {print 100-$NF} ')       #mpstat 1  1  wait o
 echo "CPU USAGE : $CPU_U %"
 
 #--------------------memory_usage
+memo=(du -h)
+echo "memory usage: $memo % "
+
+
+
