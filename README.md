@@ -28,5 +28,6 @@ fi
 
 #display top processes consuming resources 
 
-
+ps aux --sort=cpu | head -6 | tail -5
+ps aux --sort=-%mem | head -6 | tail -5
 
