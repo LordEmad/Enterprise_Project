@@ -6,17 +6,20 @@ A hands-on home lab simulating a real enterprise environment, covering networkin
 
 ## Project Structure
 
-enterprise-lab/
+```
+Enterprise_Project/
 ├── bash/
 │   ├── server_health.sh
-│   ├── backup.sh
-│   ├── user_audit.sh
-│   └── network_check.sh
+│   ├── BackupP.sh
+│   ├── useraudit.sh
+│   └── NetCheck
 ├── ansible/
 │   ├── inventory
 │   ├── install_apache.yml
-│   └── install_db.yml
+│   ├── network_audit.yml
+│   └── usercreate.yml
 └── README.md
+```
 
 
 ---
@@ -26,16 +29,17 @@ enterprise-lab/
 ### Bash
 | Script | Description |
 |--------|-------------|
-| server_health.sh | Monitors CPU, RAM, disk usage and service status |
-| backup.sh | Automated compressed backups with retention policy |
-| user_audit.sh | Audits user accounts for security issues |
-| network_check.sh | Checks connectivity, open ports, DNS and gateway |
+| server_health.sh | Monitors CPU, RAM, disk usage and service status; logs to /var/log/health_report.log |
+| BackupP.sh | Compresses and backs up /etc with a timestamped archive |
+| useraudit.sh | Audits user accounts — removes inactive/never-logged-in users, flags accounts with no password or sudo privileges, and checks account expiry |
+| NetCheck | Checks internet connectivity, open ports (22/80/443), IP addresses, interface status, DNS resolution, and default gateway |
 
 ### Ansible
 | Playbook | Description |
 |----------|-------------|
-| install_apache.yml | Installs web server across RHEL and Ubuntu hosts |
-| install_db.yml | Installs MariaDB across RHEL and Ubuntu hosts |
+| install_apache.yml | Installs Apache (httpd/apache2) on web servers and MariaDB on db servers across RHEL and Ubuntu hosts |
+| network_audit.yml | Gathers IP addresses, routing tables, open ports, and ping connectivity between hosts across all nodes |
+| usercreate.yml | Creates a user, sets a 90-day password policy, installs and starts nginx, and deploys an nginx config from a template |
 
 ---
 
