@@ -1,0 +1,38 @@
+- name: Installing packages
+  hosts: web_servers
+  become: true
+  tasks:
+
+
+    - name: install httpd for RedHat
+      dnf:
+        name: httpd
+        state: present
+      when: ansible_distribution == "RedHat"
+
+
+
+    - name: install apache2 for Ubuntu
+      apt:
+        name: apache2
+        state: present
+      when: ansible_distribution == "Ubuntu"
+
+- name: Installing databases
+  hosts: db_servers
+  become: true
+  tasks:
+
+
+    - name: install mariadb for RedHat
+      yum:
+        name: mariadb-server
+        state: present
+      when: ansible_distribution == "RedHat"
+
+
+    - name: install mariadb for Ubuntu
+      apt:
+        name: mariadb-server
+        state: present
+      when: ansible_distribution == "Ubuntu"

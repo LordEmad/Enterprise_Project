@@ -1,0 +1,54 @@
+#!/bin/bash 
+
+
+#---------------------------------------------Check if the server has internet connectivity 
+
+if ping -c 3 -W 2 8.8.8.8 
+then
+    echo "Internet : Connected"
+else
+    echo "Internet : No Connection"
+fi
+
+#--------------------------------------------Check if specific ports are open on the server 
+
+
+ports=(22 80 443)
+
+
+for port in "${ports[@]}"
+do
+    if ss -tuln | grep -q ":$port "
+    then
+        echo "Port $port : Open"
+    else
+        echo "Port $port : Closed"
+    fi
+done
+
+
+#----------------------------------------------Check the server's IP address and network interface status
+
+
+IP=$(ifconfig | awk '/inet / { print $2}' )
+
+echo "IP Address: $IP"
+
+INT=$( ip link show | awk '/ens/  {print $2, $9} '  )
+
+echo "INTERFACES  $INT"
+
+#-------------------------------------------------DNS Resoultion & Default Gateway 
+
+
+if nslookup google.com &>/dev/null
+then
+    echo "DNS : Working"
+else
+    echo "DNS : Not Working"
+fi
+
+Route=$(ip route | awk '  /default/ {print $3  }' )
+echo "$Route"
+
+

@@ -1,0 +1,41 @@
+- name: network audit playbook
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Show ip addresses
+      command: ip a
+      register: ip_op
+      
+    - name: Print the IPs
+      debug:
+        var: ip_op.stdout_lines
+        
+    - name: show Routing table
+      command: ip r
+      register: ip_Route
+      
+    - name: Display the routing table
+      debug:
+        var: ip_Route.stdout_lines
+        
+    - name: show the ports
+      command: ss -tunlp
+      register: ports_op
+      
+    - name: display it
+      debug:
+        var: ports_op.stdout_lines
+        
+    - name: PING
+      command: ping -c 3 {{ item }}
+      with_items:
+        - web1
+        - db1
+      register: ping_op
+      ignore_errors: yes
+      
+    - name: show ping results
+      debug:
+        var: ping_op.results
