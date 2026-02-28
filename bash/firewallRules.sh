@@ -52,13 +52,12 @@ echo "------------BLOCK------------------"
 
 
 firewall-cmd --permanent --add-rich-rule=' rule port port=23 protocol=tcp reject ' #telnet
-firewall-cmd --permanent --add-rich-rule=' rule port port=21protocol=tcp reject  ' #ftp
+firewall-cmd --permanent --add-rich-rule=' rule port port=21 protocol=tcp reject  ' #ftp
 
 
-echo "------------BRUTEFORCE-----------"
    
-firewall-cmd --permanent --add-rich-rule= 'rule service name=ssh limit value=5/m accept  '
-
+echo "------------BRUTEFORCE-----------"
+firewall-cmd --permanent --add-rich-rule='rule service name="ssh" limit value="5/m" accept'
 
 
 echo "------------LOGGING-----------"
