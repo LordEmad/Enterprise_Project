@@ -1,0 +1,46 @@
+- name: firewall management
+  hosts: all
+  become: yes
+  tasks:
+    - name: open port 443 for browsing
+      firewalld:
+        port: 443/tcp
+        permanent: yes
+        state: enabled
+        immediate: yes
+
+    - name: set default zone
+      firewalld:
+        zone: public
+        permanent: yes
+        state: present
+
+    - name: block port 23
+      firewalld:
+        port: 23/tcp
+        state: disabled
+        permanent: yes
+        immediate: yes
+
+    - name: allow service by name
+      firewalld:
+        service: ssh
+        state: enabled
+        permanent: yes
+        immediate: yes
+
+    - name: ensure firewall is started
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+    - name: reload firewall
+      shell: firewall-cmd --reload
+
+    - name: allow a specific ip
+      firewalld:
+        rich_rule: 'rule family=ipv4 source address=192.168.1.10 accept'
+        state: enabled
+        permanent: yes
+        immediate: yes

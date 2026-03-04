@@ -1,0 +1,26 @@
+- name: DHCP Setup
+  hosts: all
+  become: yes
+  tasks:
+    - name: install dhcp server
+      dnf:
+        name: dhcp-server
+        state: present
+
+    - name: deploy dhcp config
+      template:
+        src: dhcpd.conf.j2
+        dest: /etc/dhcp/dhcpd.conf
+
+    - name: ensure dhcpd is started
+      service:
+        name: dhcpd
+        state: started
+        enabled: yes
+
+    - name: open firewall
+      firewalld:
+        port: 67/udp
+        state: enabled
+        permanent: yes
+        immediate: yes

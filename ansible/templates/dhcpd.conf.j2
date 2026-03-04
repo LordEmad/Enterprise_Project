@@ -1,0 +1,41 @@
+#
+# DHCP Server Configuration file.
+#   see /usr/share/doc/dhcp-server/dhcpd.conf.example
+#   see dhcpd.conf(5) man page
+#
+#
+#
+#
+#
+#
+  
+
+
+
+
+default-lease-time 600;
+max-lease-time 7200;
+
+# VLAN 10 
+subnet 192.168.10.0 netmask 255.255.255.0 {
+    range 192.168.10.100 192.168.10.200;
+    option routers 192.168.10.1;
+    option domain-name-servers 8.8.8.8;
+}
+
+# VLAN 20 
+subnet 192.168.20.0 netmask 255.255.255.0 {
+    range 192.168.20.100 192.168.20.200;
+    option routers 192.168.20.1;
+    option domain-name-servers 8.8.8.8;
+}
+
+# VLAN 30 
+subnet 192.168.30.0 netmask 255.255.255.0 {
+    range 192.168.30.100 192.168.30.200;
+    option routers 192.168.30.1;
+    option domain-name-servers 8.8.8.8;
+}
+
+subnet 192.168.1.0 netmask 255.255.255.0 {}
+subnet 172.17.0.0 netmask 255.255.0.0 {}
